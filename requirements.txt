@@ -1,0 +1,4 @@
+asgiref==3.6.0
+Django==4.2.1
+pyswip==0.2.10
+sqlparse==0.4.4
