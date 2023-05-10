@@ -23,7 +23,7 @@ def tambah_makanan(request):
 def update_makanan(request):
 	if request.method == 'POST':
 		try:
-			result = process('tambah_makanan(M, L, P, K, V, JV, H, IG, C)')
+			result = process('update_makanan(M, L, P, K, V, JV, H, IG, C)')
 		except:
 			context = {'error':'error'}
 	return redirect('list_makanan')
