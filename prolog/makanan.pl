@@ -1,19 +1,34 @@
 % definisi makanan
 
-:- use_module(library(persistency)).
+:- dynamic makanan/1.
+:- dynamic lemak/2.
+:- dynamic protein/2.
+:- dynamic karbohidrat/2.
+:- dynamic vitamin/2.
+:- dynamic jumlah_vitamin/2.
+:- dynamic harga/2.
+:- dynamic indeks_glukemik/2.
 
-:- persistent makanan(nama_makanan:any).
-:- persistent lemak(nama_makanan:atom, jumlah_lemak:float).
-:- persistent protein(nama_makanan:atom, jumlah_protein:float).
-:- persistent karbohidrat(nama_makanan:atom, jumlah_karbohidrat:float).
-:- persistent vitamin(nama_makanan:atom, list_nama_vitamin:list).
-:- persistent jumlah_vitamin(nama_makanan:atom, list_jumlah_vitamin:list).
-:- persistent harga(nama_makanan:atom, harga:integer).
-:- persistent indeks_glukemik(nama_makanan:atom, jumlah_indeks_glukemik:float).
+makanan(apel).
+makanan(jeruk).
 
-:- initialization(init).
+lemak(apel, 0.4).
+lemak(jeruk, 0.5).
 
-init:-
-  absolute_file_name('prolog/database/makanan.db', File, [access(write)]),
-  db_attach(File, []).
+protein(apel,0.3).
+protein(jeruk, 0.4).
 
+karbohidrat(apel,10).
+karbohidrat(apel,10).
+
+vitamin(apel, ["A","C"]).
+vitamin(jeruk, ["A","C"]).
+
+jumlah_vitamin(apel,[10,20]).
+jumlah_vitamin(jeruk,[10,20]).
+
+harga(apel,100).
+harga(jeruk,150).
+
+indeks_glukemik(apel,25).
+indeks_glukemik(jeruk,10).

@@ -11,42 +11,30 @@ Anggota Kelompok:
 
 tambah_makanan(M, L, P, K, V, JV, H, IG) :-
     \+ makanan(M),
-    assert_makanan(M),
-    assert_lemak(M,L),
-    assert_protein(M,P),
-    assert_karbohidrat(M,K),
-    assert_vitamin(M,V),
-    assert_jumlah_vitamin(M,JV),
-    assert_harga(M,H),
-    assert_indeks_glukemik(M,IG).
+    assert(makanan(M)),
+    assert(lemak(M,L)),
+    assert(protein(M,P)),
+    assert(karbohidrat(M,K)),
+    assert(vitamin(M,V)),
+    assert(jumlah_vitamin(M,JV)),
+    assert(harga(M,H)),
+    assert(indeks_glukemik(M,IG)).
 
 delete_makanan(M) :-
     makanan(M),
-    retract_makanan(M),
-    retract_lemak(M,_),
-    retract_protein(M,_),
-    retract_karbohidrat(M,_),
-    retract_vitamin(M,_),
-    retract_jumlah_vitamin(M,_),
-    retract_harga(M,_),
-    retract_indeks_glukemik(M,_).
-    
+    retract(makanan(M)),
+    retract(lemak(M,_)),
+    retract(protein(M,_)),
+    retract(karbohidrat(M,_)),
+    retract(vitamin(M,_)),
+    retract(jumlah_vitamin(M,_)),
+    retract(harga(M,_)),
+    retract(indeks_glukemik(M,_)).
 
 update_makanan(M, L, P, K, V, JV, H, IG) :-
     makanan(M),
     delete_makanan(M),
     tambah_makanan(M, L, P, K, V, JV, H, IG).
-
-data_makanan(M, L, P, K, V, JV, H, IG, C) :-
-    makanan(M),
-    protein(M,P),
-    karbohidrat(M,K),
-    lemak(M,L),
-    vitamin(M, V),
-    jumlah_vitamin(M, JV),
-    harga(M, H),
-    indeks_glukemik(M, IG),
-    kalori(M, C).
 
 kalori(M, Ans):-
     protein(M,P),
@@ -78,7 +66,7 @@ calori_less_than(M,C):-
     kalori(M, Cm),
     Cm =< C.
 
-indeks_glukemik_less_than(M,Ig):-
+indeks_glukemik_less(M,Ig):-
     makanan(M),
     indeks_glukemik(M,Mig),
     Mig =< Ig.
@@ -175,3 +163,32 @@ tinggi_protein(Lm,Lj) :-
     S is Jf+Jkar+Jp,
     Rat is Jp/S,
     Rat >= 0.20.
+
+menu_plan(Ind, Amt, Budget, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, AnsList):-
+    get_food(Ind, Amt, [], 0 , 0, 0, 0, Tot_price, Tot_kalori, Tot_lemak, Tot_protein, AnsList),
+    Tot_price =< Budget,
+    Tot_kalori >= Kalori_Min,
+    Tot_kalori =< Kalori_Max,
+    Tot_lemak =< Lemak_Min,
+    Tot_lemak =< Lemak_Max,
+    Tot_protein >= Protein_Min.
+
+
+get_food(Ind, Amt, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Tot_price, Tot_Kalori, Tot_lemak, Tot_protein, AnsList):-
+    Amt > 0,
+    makanan(M),
+    harga(M, P),
+    protein(M,Po),
+    lemak(M,L),
+    kalori(M,K),
+    indeks_glukemik_less(M, Ind),
+
+    append( AccList, [M], AccListN),
+    Acc_priceN is Acc_price+P,
+    Acc_lemakN is Acc_lemak+L,
+    Acc_proteinN is Acc_protein+Po,
+    Acc_kaloriN is Acc_kalori + K,
+    AmtN is Amt-1,
+    get_food(Ind, AmtN, AccListN, Acc_priceN, Acc_lemakN, Acc_proteinN, Acc_kaloriN, Tot_price, Tot_Kalori, Tot_lemak, Tot_protein, AnsList).
+
+get_food(_, 0, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Acc_price, Acc_kalori, Acc_lemak, Acc_protein, AccList).
