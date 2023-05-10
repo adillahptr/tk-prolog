@@ -30,7 +30,7 @@ delete_makanan(M) :-
     retract_jumlah_vitamin(M,_),
     retract_harga(M,_),
     retract_indeks_glukemik(M,_).
-
+    
 
 update_makanan(M, L, P, K, V, JV, H, IG) :-
     makanan(M),
@@ -176,7 +176,6 @@ tinggi_protein(Lm,Lj) :-
     Rat is Jp/S,
     Rat >= 0.20.
 
-%memilih set of beberapa kombinasi dari makanan
 menu_plan(Ind, Amt, Budget, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, AnsList):-
     get_food(Ind, Amt, [], 0 , 0, 0, 0, Tot_price, Tot_kalori, Tot_lemak, Tot_protein, AnsList),
     Tot_price =< Budget,
