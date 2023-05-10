@@ -36,7 +36,7 @@ update_makanan(M, L, P, K, V, JV, H, IG) :-
     delete_makanan(M),
     tambah_makanan(M, L, P, K, V, JV, H, IG).
 
-get_data_makanan(M, L, P, K, V, JV, H, IG, C) :-
+data_makanan(M, L, P, K, V, JV, H, IG, C) :-
     makanan(M),
     protein(M,P),
     karbohidrat(M,K),

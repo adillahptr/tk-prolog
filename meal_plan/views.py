@@ -9,7 +9,7 @@ def index(request):
 	return HttpResponse(x)
 
 def list_makanan(request):
-	result = process('get_data_makanan(M, L, P, K, V, JV, H, IG, C)')
+	result = process('data_makanan(M, L, P, K, V, JV, H, IG, C)')
 	return render(request, 'list_makanan.html', context = {'makanan':result})
 
 
