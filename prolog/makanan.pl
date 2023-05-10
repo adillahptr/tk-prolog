@@ -19,7 +19,7 @@ protein(apel,0.3).
 protein(jeruk, 0.4).
 
 karbohidrat(apel,10).
-karbohidrat(apel,10).
+karbohidrat(jeruk,10).
 
 vitamin(apel, ["A","C"]).
 vitamin(jeruk, ["A","C"]).
@@ -32,3 +32,5 @@ harga(jeruk,150).
 
 indeks_glukemik(apel,25).
 indeks_glukemik(jeruk,10).
+
+
