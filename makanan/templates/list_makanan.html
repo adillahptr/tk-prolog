@@ -62,40 +62,52 @@
   </div>
 </div>
 
-<div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createMakananModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Tambah Makanan</h5>
       </div>
       <div class="modal-body">
-        <form method="POST" id="createEventForm">
+        <form method="POST" id="createMakananForm" action="{% url 'tambah_makanan' %}">
+          {% csrf_token %}
 			<div class="mb-3">
-				<input class="form-control" type="text" name="makanan" placeholder="Makanan" required>
+        <label for="makanan">Makanan</label>
+				<input class="form-control" type="text" name="makanan" placeholder="Nama makanan" required>
 			</div>
 			<div class="mb-3">
-				<input class="form-control" type="number" step="0.1" name="lemak" placeholder="jumlah lemak" required>
+        <label for="makanan">Jumlah Lemak</label>
+				<input class="form-control" type="number" step="0.1" name="lemak" placeholder="Jumlah Lemak (float)" required>
 			</div>
 			<div class="mb-3">
-				<input class="form-control" type="number" step="0.1" name="protein" placeholder="jumlah protein" required>
+        <label for="makanan">Jumlah Protein</label>
+				<input class="form-control" type="number" step="0.1" name="protein" placeholder="Jumlah Protein (float)" required>
 			</div>
 			<div class="mb-3">
-				<input class="form-control" type="number" step="0.1" name="karbohidrat" placeholder="jumlah karbohidrat" required>
+        <label for="makanan">Jumlah Karbohidrat</label>
+				<input class="form-control" type="number" step="0.1" name="karbohidrat" placeholder="Jumlah Karbohidrat (float)" required>
 			</div>
 			<div class="mb-3">
-				<input class="form-control" type="text" name="vitamin" placeholder="Vitamin" required>
+        <label for="makanan">Vitamin</label>
+				<input class="form-control" type="text" name="vitamin" placeholder="Jenis Vitamin (misal = A,B)" required>
 			</div>
-			<div class="mb-3">
-				<input class="form-control" type="number" step="0.1" name="indeks_glukemik" placeholder="Indeks glukemik" required>
-			</div>
-			<div class="mb-3">
-				<input class="form-control" type="number" step="0.1" name="indeks_glukemik" placeholder="Indeks glukemik" required>
-			</div>
-		</form>
+      <div class="mb-3">
+        <label for="makanan">Jumlah Vitamin</label>
+        <input class="form-control" type="text" name="jumlah_vitamin" placeholder="Jumlah Vitamin (misal = 1,2)" required>
       </div>
+			<div class="mb-3">
+        <label for="makanan">Indeks Glukemik</label>
+				<input class="form-control" type="number" step="0.1" name="indeks_glukemik" placeholder="Indeks glukemik (float)" required>
+			</div>
+			<div class="mb-3">
+        <label for="makanan">Harga</label>
+				<input class="form-control" type="number" name="harga" placeholder="Harga" required>
+			</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+		</form>
       </div>
     </div>
   </div>
@@ -107,7 +119,7 @@
 <div class="container">
 	  <br>
 	  <h1 style="color: black;">List Makanan</h1><br>
-	  <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">+ Tambah Makanan</a>
+	  <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createMakananModal">+ Tambah Makanan</a>
 	  <br>
 </div>
 

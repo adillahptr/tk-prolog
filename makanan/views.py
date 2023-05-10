@@ -14,8 +14,18 @@ def list_makanan(request):
 def tambah_makanan(request):
 	if request.method == 'POST':
 		try:
+			nama = request.POST.get('makanan')
+			lemak = request.POST.get('lemak')
+			protein = request.POST.get('protein')
+			karbohidrat = request.POST.get('karbohidrat')
+			vitamin = request.POST.get('vitamin')
+			jumlah_vitamin = request.POST.get('jumlah_vitamin')
+			ig = request.POST.get('indeks_glukemik')
+			harga = request.POST.get('harga')
 
-			result = process('tambah_makanan(M, L, P, K, V, JV, H, IG, C)')
+			vitamin = str(vitamin.split(',')).replace("'", '"')
+			jumlah_vitamin = str([int(x) for x in jumlah_vitamin.split(',')])
+			result = process(f"""tambah_makanan('{nama}', {lemak}, {protein}, {karbohidrat}, {vitamin}, {jumlah_vitamin}, {harga}, {ig})""")
 		except:
 			context = {'error':'error'}
 	return redirect('list_makanan')
@@ -23,7 +33,7 @@ def tambah_makanan(request):
 def update_makanan(request):
 	if request.method == 'POST':
 		try:
-			result = process('update_makanan(M, L, P, K, V, JV, H, IG, C)')
+			result = process('update_makanan(M, L, P, K, V, JV, H, IG)')
 		except:
 			context = {'error':'error'}
 	return redirect('list_makanan')
@@ -35,3 +45,4 @@ def hapus_makanan(request, nama_makanan):
 		print('error')
 		context = {'error':'Gagal menghapus makanan'}
 	return redirect('list_makanan')
+

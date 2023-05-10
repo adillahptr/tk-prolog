@@ -11,6 +11,7 @@ Anggota Kelompok:
 
 tambah_makanan(M, L, P, K, V, JV, H, IG) :-
     \+ makanan(M),
+    validate_input_makanan(M, L, P, K, V, JV, H, IG),
     assert_makanan(M),
     assert_lemak(M,L),
     assert_protein(M,P),
@@ -36,6 +37,33 @@ update_makanan(M, L, P, K, V, JV, H, IG) :-
     makanan(M),
     delete_makanan(M),
     tambah_makanan(M, L, P, K, V, JV, H, IG).
+
+validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
+    atomic(M),
+    float(L),
+    float(P),
+    float(K),
+    integer(H),
+    is_list_of_alpha(V),
+    is_list_of_integer(JV),
+    has_same_length(V, JV),
+    float(IG),
+    L>=0, P>=0, K>=0, H>=0, IG>=0.
+
+is_list_of_integer([X]) :- integer(X).
+is_list_of_integer([H|T]) :- 
+    integer(H), 
+    is_list_of_integer(T).
+
+is_list_of_alpha([X]) :- is_alpha(X).
+is_list_of_alpha([H|T]) :- 
+    is_alpha(H), 
+    is_list_of_alpha(T).
+
+has_same_length(L1, L2) :- 
+    length(L1, Len1), 
+    length(L2, Len2), 
+    Len1=:=Len2.
 
 data_makanan(M, L, P, K, V, JV, H, IG, C) :-
     makanan(M),
@@ -175,3 +203,22 @@ tinggi_protein(Lm,Lj) :-
     S is Jf+Jkar+Jp,
     Rat is Jp/S,
     Rat >= 0.20.
+
+get_food(Ind, Amt, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Tot_price, Tot_Kalori, Tot_lemak, Tot_protein, AnsList):-
+    Amt > 0,
+    makanan(M),
+    harga(M, P),
+    protein(M,Po),
+    lemak(M,L),
+    kalori(M,K),
+    indeks_glukemik_less(M, Ind),
+
+    append( AccList, [M], AccListN),
+    Acc_priceN is Acc_price+P,
+    Acc_lemakN is Acc_lemak+L,
+    Acc_proteinN is Acc_protein+Po,
+    Acc_kaloriN is Acc_kalori + K,
+    AmtN is Amt-1,
+    get_food(Ind, AmtN, AccListN, Acc_priceN, Acc_lemakN, Acc_proteinN, Acc_kaloriN, Tot_price, Tot_Kalori, Tot_lemak, Tot_protein, AnsList).
+
+get_food(_, 0, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Acc_price, Acc_kalori, Acc_lemak, Acc_protein, AccList).
