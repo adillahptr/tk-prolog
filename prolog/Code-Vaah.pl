@@ -30,6 +30,7 @@ delete_makanan(M) :-
     retract_jumlah_vitamin(M,_),
     retract_harga(M,_),
     retract_indeks_glukemik(M,_).
+    
 
 update_makanan(M, L, P, K, V, JV, H, IG) :-
     makanan(M),

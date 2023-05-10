@@ -71,7 +71,25 @@
       <div class="modal-body">
         <form method="POST" id="createEventForm">
 			<div class="mb-3">
-				<input class="form-control" type="text" name="username" placeholder="Makanan" required>
+				<input class="form-control" type="text" name="makanan" placeholder="Makanan" required>
+			</div>
+			<div class="mb-3">
+				<input class="form-control" type="number" step="0.1" name="lemak" placeholder="jumlah lemak" required>
+			</div>
+			<div class="mb-3">
+				<input class="form-control" type="number" step="0.1" name="protein" placeholder="jumlah protein" required>
+			</div>
+			<div class="mb-3">
+				<input class="form-control" type="number" step="0.1" name="karbohidrat" placeholder="jumlah karbohidrat" required>
+			</div>
+			<div class="mb-3">
+				<input class="form-control" type="text" name="vitamin" placeholder="Vitamin" required>
+			</div>
+			<div class="mb-3">
+				<input class="form-control" type="number" step="0.1" name="indeks_glukemik" placeholder="Indeks glukemik" required>
+			</div>
+			<div class="mb-3">
+				<input class="form-control" type="number" step="0.1" name="indeks_glukemik" placeholder="Indeks glukemik" required>
 			</div>
 		</form>
       </div>
@@ -128,7 +146,7 @@
 					<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upadateEventModal"> Edit</button>
 		    	</div>
 		    	<div class="col col-lg-1">
-		      		<button class="btn btn-danger"> Delete</button>
+		      		<button class="btn btn-danger"><a style="color:white" href="{% url 'hapus_makanan' m.M %}"> Delete</a></button>
 		    	</div>
         </td>
       </tr>

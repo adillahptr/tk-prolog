@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 import meal_plan.urls as meal_plan
+import makanan.urls as makanan
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('meal_plan/', include(meal_plan)),
+    path('makanan/', include(makanan)),
 ]

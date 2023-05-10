@@ -1,16 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
-from meal_plan import process
 
-from pyswip import Prolog
+from tk_prolog import process
 
 def index(request):
-	x = process('get_data_makanan(M, L, P, K, V, JV, H, IG, C)')
+	x = process('data_makanan(M, L, P, K, V, JV, H, IG, C)')
 	return HttpResponse(x)
-
-def list_makanan(request):
-	result = process('data_makanan(M, L, P, K, V, JV, H, IG, C)')
-	return render(request, 'list_makanan.html', context = {'makanan':result})
-
-
-	
