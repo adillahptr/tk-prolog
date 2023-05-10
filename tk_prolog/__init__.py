@@ -1,9 +1,13 @@
 from multiprocessing import Pool
 
 def process(query):
-    return pool.apply(dowork, (query,))
+    with Pool(initializer=initialize_worker) as pool:
+        res = pool.apply_async(dowork, (query,))
+        pool.close()
+        pool.join()
+        return res.get()
 
-def initialise():
+def initialize_worker():
     global prolog
     from pyswip import Prolog
     prolog = Prolog()
@@ -14,5 +18,3 @@ def dowork(query):
     global prolog
     result = prolog.query(query)
     return list(result)
-
-pool = Pool(None, initialise)
