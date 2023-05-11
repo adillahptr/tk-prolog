@@ -50,6 +50,22 @@ validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
     number(IG),
     L>=0, P>=0, K>=0, H>=0, IG>=0.
 
+filter_makanan(M, Harga_Min, Harga_Max, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, 
+                Protein_Max, Karbohidrat_Min, Karbohidrat_Max, List_Vitamin, List_Jumlah_Vitamin) :-
+    makanan(M),
+    harga_more_than(M, Harga_Min),
+    (Harga_Max==none ; (Harga_Max\==none, harga_less_than(M, Harga_Max))),
+    calori_more_than(M, Kalori_Min),
+    (Kalori_Max==none ; (Kalori_Max\==none, calori_less_than(M, Kalori_Max))),
+    lemak_more_than(M, Lemak_Min),
+    (Lemak_Max==none ; (Lemak_Max\==none, lemak_less_than(M, Lemak_Max))),
+    protein_more_than(M, Protein_Min),
+    (Protein_Max==none ; (Protein_Max\==none, protein_less_than(M, Protein_Max))),
+    karbohidrat_more_than(M, Karbohidrat_Min),
+    (Karbohidrat_Max==none ; (Karbohidrat_Max\==none, karbohidrat_less_than(M, Karbohidrat_Max))),
+    has_vitamin(M, List_Vitamin, List_Jumlah_Vitamin).
+
+
 is_list_of_number([X]) :- number(X).
 is_list_of_number([H|T]) :- 
     number(H), 
@@ -90,31 +106,61 @@ harga_less_than(M,V):-
    harga(M,Hm),
    Hm =< V.
 
-harga_between(M, VA, VB) :-
+harga_between(M, V1, V2) :-
     makanan(M),
     harga(M, Hm),
-    Hm =< VA,
-    Hm >= VB.
+    Hm >= V1,
+    Hm =< V2.
 
 harga_more_than(M, V) :-
     makanan(M),
     harga(M, Hm),
     Hm >= V.
 
-calori_less_than(M,C):-
-    makanan(M),
-    kalori(M, Cm),
-    Cm =< C.
-
 indeks_glukemik_less_than(M,Ig):-
     makanan(M),
     indeks_glukemik(M,Mig),
     Mig =< Ig.
 
+calori_less_than(M,C):-
+    makanan(M),
+    kalori(M, Cm),
+    Cm =< C.
+
 calori_more_than(M,C):-
     makanan(M),
     kalori(M, Cm),
     Cm >= C.
+
+lemak_less_than(M, L) :-
+    makanan(M),
+    lemak(M, Lm),
+    Lm =< L.
+
+lemak_more_than(M, L) :-
+    makanan(M),
+    lemak(M, Lm),
+    Lm >= L.
+
+protein_less_than(M, P) :-
+    makanan(M),
+    protein(M, Pm),
+    Pm =< P.
+
+protein_more_than(M, P) :-
+    makanan(M),
+    protein(M, Pm),
+    Pm >= P.
+
+karbohidrat_less_than(M, K) :-
+    makanan(M),
+    karbohidrat(M, Km),
+    Km =< K.
+
+karbohidrat_more_than(M, K) :-
+    makanan(M),
+    karbohidrat(M, Km),
+    Km >= K.
 
 protein_kalori(P,Ans):-
     Ans is P*3.
@@ -124,14 +170,6 @@ lemak_kalori(L,Ans):-
 
 karbohidrat_kalori(K,Ans):-
     Ans is K*3.
-
-% rule untuk mencari makanan M yang memiliki suatu vitamin V dengan jumlah JV
-
-has_vitamin(M, V, JV) :-
-    makanan(M),
-    vitamin(M, LV),
-    member(V, LV),
-    get_vitamin(M, V, JV).
 
 % rule untuk mencari jumlah vitamin V di makanan M
 
@@ -144,6 +182,17 @@ get_vitamin_list(_, [], [], 0) :- !.
 get_vitamin_list(V, [V | _], [H | _], H) :- !.
 get_vitamin_list(V, [_ | Tv], [_ | Tvt], Ans) :-
     get_vitamin_list(V, Tv, Tvt, Ans).
+
+% rule untuk mencari makanan M yang memiliki suatu vitamin V dengan jumlah JV
+
+has_vitamin(_, [], []) :- !.
+has_vitamin(M, [Hv|Tv], [Hj|Tj]) :-
+    makanan(M),
+    vitamin(M, LV),
+    member(Hv, LV),
+    get_vitamin(M, Hv, Hj),
+    has_vitamin(M, Tv, Tj).
+
 
 % rule untuk mencari jumlah kalori protein dari list makanan
 
