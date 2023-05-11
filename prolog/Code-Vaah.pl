@@ -125,6 +125,14 @@ lemak_kalori(L,Ans):-
 karbohidrat_kalori(K,Ans):-
     Ans is K*3.
 
+% rule untuk mencari makanan M yang memiliki suatu vitamin V dengan jumlah JV
+
+has_vitamin(M, V, JV) :-
+    makanan(M),
+    vitamin(M, LV),
+    member(V, LV),
+    get_vitamin(M, V, JV).
+
 % rule untuk mencari jumlah vitamin V di makanan M
 
 get_vitamin(M, V, Ans) :-
@@ -235,7 +243,7 @@ get_food(Ind, Amt, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Tot_p
 get_food(_, 0, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Acc_price, Acc_kalori, Acc_lemak, Acc_protein, AccList).
 
 tambah_user(Username, Password) :-
-    \+ user(Username, _)
+    \+ user(Username, _),
     assert_user(Username, Password).
 
 verify_user(Username, Password) :-
