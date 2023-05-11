@@ -2,7 +2,7 @@
 
 :- use_module(library(persistency)).
 
-:- persistent makanan(nama_makanan:any).
+:- persistent makanan(nama_makanan:atom).
 :- persistent lemak(nama_makanan:atom, jumlah_lemak:number).
 :- persistent protein(nama_makanan:atom, jumlah_protein:number).
 :- persistent karbohidrat(nama_makanan:atom, jumlah_karbohidrat:number).

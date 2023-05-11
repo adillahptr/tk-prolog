@@ -233,3 +233,11 @@ get_food(Ind, Amt, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Tot_p
     get_food(Ind, AmtN, AccListN, Acc_priceN, Acc_lemakN, Acc_proteinN, Acc_kaloriN, Tot_price, Tot_Kalori, Tot_lemak, Tot_protein, AnsList).
 
 get_food(_, 0, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Acc_price, Acc_kalori, Acc_lemak, Acc_protein, AccList).
+
+tambah_user(Username, Password) :-
+    \+ user(Username, _)
+    assert_user(Username, Password).
+
+verify_user(Username, Password) :-
+    crypto_password_hash(Password, X),
+    user(Username, X).   
