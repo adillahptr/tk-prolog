@@ -22,6 +22,6 @@ import makanan.urls as makanan
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('meal_plan/', include(meal_plan)),
+    path('meal_planner/', include(meal_plan)),
     path('makanan/', include(makanan)),
 ]
