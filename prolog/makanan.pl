@@ -3,13 +3,13 @@
 :- use_module(library(persistency)).
 
 :- persistent makanan(nama_makanan:any).
-:- persistent lemak(nama_makanan:atom, jumlah_lemak:float).
-:- persistent protein(nama_makanan:atom, jumlah_protein:float).
-:- persistent karbohidrat(nama_makanan:atom, jumlah_karbohidrat:float).
+:- persistent lemak(nama_makanan:atom, jumlah_lemak:number).
+:- persistent protein(nama_makanan:atom, jumlah_protein:number).
+:- persistent karbohidrat(nama_makanan:atom, jumlah_karbohidrat:number).
 :- persistent vitamin(nama_makanan:atom, list_nama_vitamin:list).
 :- persistent jumlah_vitamin(nama_makanan:atom, list_jumlah_vitamin:list).
-:- persistent harga(nama_makanan:atom, harga:integer).
-:- persistent indeks_glukemik(nama_makanan:atom, jumlah_indeks_glukemik:float).
+:- persistent harga(nama_makanan:atom, harga:number).
+:- persistent indeks_glukemik(nama_makanan:atom, jumlah_indeks_glukemik:number).
 
 :- initialization(init).
 

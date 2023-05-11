@@ -40,20 +40,20 @@ update_makanan(M, L, P, K, V, JV, H, IG) :-
 
 validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
     atomic(M),
-    float(L),
-    float(P),
-    float(K),
+    number(L),
+    number(P),
+    number(K),
     integer(H),
     is_list_of_alpha(V),
-    is_list_of_integer(JV),
+    is_list_of_number(JV),
     has_same_length(V, JV),
-    float(IG),
+    number(IG),
     L>=0, P>=0, K>=0, H>=0, IG>=0.
 
-is_list_of_integer([X]) :- integer(X).
-is_list_of_integer([H|T]) :- 
-    integer(H), 
-    is_list_of_integer(T).
+is_list_of_number([X]) :- number(X).
+is_list_of_number([H|T]) :- 
+    number(H), 
+    is_list_of_number(T).
 
 is_list_of_alpha([X]) :- is_alpha(X).
 is_list_of_alpha([H|T]) :- 
