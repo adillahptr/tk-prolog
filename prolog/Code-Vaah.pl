@@ -43,12 +43,18 @@ validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
     number(L),
     number(P),
     number(K),
-    integer(H),
-    is_list_of_alpha(V),
+    number(H),
+    is_list_of_string(V),
     is_list_of_number(JV),
     has_same_length(V, JV),
     number(IG),
     L>=0, P>=0, K>=0, H>=0, IG>=0.
+
+validate_input_vitamin([X]) :- 
+    (X == "A"; X == "B", X == "C"; X == "D" ; X == "E" ; X == "K").
+validate_input_vitamin([Hv|Tv]) :-
+    (Hv == "A" ; Hv == "B" ; Hv == "C" ; Hv == "D" ; Hv == "E" ; Hv == "K"),
+    validate_input_vitamin(Tv).
 
 filter_makanan(M, Harga_Min, Harga_Max, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, 
                 Protein_Max, Karbohidrat_Min, Karbohidrat_Max, List_Vitamin, List_Jumlah_Vitamin) :-
@@ -71,10 +77,10 @@ is_list_of_number([H|T]) :-
     number(H), 
     is_list_of_number(T).
 
-is_list_of_alpha([X]) :- is_alpha(X).
-is_list_of_alpha([H|T]) :- 
-    is_alpha(H), 
-    is_list_of_alpha(T).
+is_list_of_string([X]) :- string(X).
+is_list_of_string([H|T]) :- 
+    string(H), 
+    is_list_of_string(T).
 
 has_same_length(L1, L2) :- 
     length(L1, Len1), 

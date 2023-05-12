@@ -29,7 +29,18 @@ def tambah_makanan(request):
 def update_makanan(request):
 	if request.method == 'POST':
 		try:
-			result = process('update_makanan(M, L, P, K, V, JV, H, IG)')
+			nama = request.POST.get('makanan')
+			lemak = request.POST.get('lemak')
+			protein = request.POST.get('protein')
+			karbohidrat = request.POST.get('karbohidrat')
+			vitamin = request.POST.get('vitamin')
+			jumlah_vitamin = request.POST.get('jumlah_vitamin')
+			ig = request.POST.get('indeks_glukemik')
+			harga = request.POST.get('harga')
+
+			vitamin = str(vitamin.split(',')).replace("'", '"')
+			jumlah_vitamin = str([int(x) for x in jumlah_vitamin.split(',')])
+			result = process(f"""update_makanan('{nama}', {lemak}, {protein}, {karbohidrat}, {vitamin}, {jumlah_vitamin}, {harga}, {ig})""")
 		except:
 			context = {'error':'error'}
 	return redirect('list_makanan')
