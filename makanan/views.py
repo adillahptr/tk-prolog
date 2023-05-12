@@ -50,8 +50,8 @@ def search_makanan(request):
 def filter_makanan(request):
 	if request.method == 'POST':
 		min_harga=request.POST.get('budget')
-		min_kalori=0
-		maks_kalori=0
-		min_lemak=0
-		maks_lemak=0
-		min_protein=0
+		min_kalori=request.POST.get('min_kalori')
+		maks_kalori=request.POST.get('max_kalor')
+		min_lemak=request.POST.get('min_lemak')
+		maks_lemak=request.POST.get('maks_lemak')
+		min_protein=request.POST.get('min_protein')

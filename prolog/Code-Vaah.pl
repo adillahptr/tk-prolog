@@ -37,7 +37,7 @@ update_makanan(M, L, P, K, V, JV, H, IG) :-
     makanan(M),
     delete_makanan(M),
     tambah_makanan(M, L, P, K, V, JV, H, IG).
-
+%hapus is_list_of_alpha
 validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
     atomic(M),
     number(L),
