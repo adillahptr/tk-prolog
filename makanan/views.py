@@ -20,8 +20,10 @@ def tambah_makanan(request):
 			harga = request.POST.get('harga')
 
 			vitamin = str(vitamin.split(',')).replace("'", '"')
+			print(vitamin)
 			jumlah_vitamin = str([int(x) for x in jumlah_vitamin.split(',')])
 			result = process(f"""tambah_makanan('{nama}', {lemak}, {protein}, {karbohidrat}, {vitamin}, {jumlah_vitamin}, {harga}, {ig})""")
+			print("ini hasil "+result)
 		except:
 			context = {'error':'error'}
 	return redirect('list_makanan')
@@ -44,3 +46,12 @@ def hapus_makanan(request, nama_makanan):
 
 def search_makanan(request):
 	return redirect('list_makanan')
+
+def filter_makanan(request):
+	if request.method == 'POST':
+		min_harga=request.POST.get('budget')
+		min_kalori=0
+		maks_kalori=0
+		min_lemak=0
+		maks_lemak=0
+		min_protein=0

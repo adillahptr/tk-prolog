@@ -44,7 +44,7 @@ validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
     number(P),
     number(K),
     integer(H),
-    is_list_of_alpha(V),
+    %is_list_of_alpha(V),
     is_list_of_number(JV),
     has_same_length(V, JV),
     number(IG),

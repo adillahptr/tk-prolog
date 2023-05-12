@@ -15,3 +15,11 @@ assert(vitamin(jeruk,["A","C"])).
 assert(jumlah_vitamin(jeruk,[10,20])).
 assert(harga(jeruk,150)).
 assert(indeks_glukemik(jeruk,10.0)).
+assert(makanan(asa)).
+assert(lemak(asa,1.4)).
+assert(protein(asa,1.5)).
+assert(karbohidrat(asa,1.7)).
+assert(vitamin(asa,["A","B","C","B1"])).
+assert(jumlah_vitamin(asa,[1,2,4,5])).
+assert(harga(asa,14)).
+assert(indeks_glukemik(asa,14)).
