@@ -40,45 +40,6 @@
     </div>
 </nav>
 
-
-<div class="modal fade" id="addMakananModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Makanan</h5>
-      </div>
-      <div class="modal-body">
-        <form method="POST" id="upadateEventForm" class="mb-3">
-          <div class="row">
-            <div class="col">
-              <input class="form-control" type="text" name="nama_makanan" placeholder="Makanan" required>
-            </div>
-            <div class="col">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </div>           
-        </form>
-
-        <form method="POST" class="form-inline">
-          Atau tambah secara random:
-          <div class="row">
-            <div class="col">
-              <input class="form-control" type="text" name="amount" placeholder="Jumlah Makanan" required>
-            </div>
-            <div class="col">
-              <button type="submit" class="btn btn-primary">Randomize</button>
-            </div>
-          </div>            
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="container">
 <div class="container">
 	  <br>
@@ -89,11 +50,18 @@
 
 
 <div class="container" >
-<p class="mt-3">Set your preferences here:</p>
 <div class="card mb-3">
   <div class="card-body">
-    <form>
+    <form method="POST" action="{% url 'meal_planner' %}">
+      {% csrf_token %}
       <div class="row">
+        <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Amount</label>
+            <input class="form-control" name="amount" placeholder="" value=1 required>
+          </div>
+        </div>
+
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Budget</label>
@@ -104,14 +72,14 @@
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Min. Kalori</label>
-            <input class="form-control" type="number" name="min_kalori" placeholder="" required>
+            <input class="form-control" name="min_kalori" placeholder="" value=0 required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Maks. Kalori</label>
-            <input class="form-control" type="number" name="max_kalori" placeholder="" required>
+            <input class="form-control" name="max_kalori" placeholder="" value="none" required>
           </div>
         </div>
       </div>
@@ -119,29 +87,36 @@
       <div class="row">
         <div class="col">
           <div class="mb-3">
+            <label for="makanan">Maks. Indeks Glukemik</label>
+            <input class="form-control" name="max_ig" placeholder="" value="none" required>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
             <label for="makanan">Min. Lemak</label>
-            <input class="form-control" type="number" name="min_lemak" placeholder="" required>
+            <input class="form-control" name="min_lemak" placeholder="" value=0 required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Maks. Lemak</label>
-            <input class="form-control" type="number" name="maks_lemak" placeholder="" required>
+            <input class="form-control" name="max_lemak" placeholder="" value="none" required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Min. Protein</label>
-            <input class="form-control" type="number" name="min_protein" placeholder="" required>
+            <input class="form-control" name="min_protein" placeholder="" value=0 required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <br>
-            <button type="submit" class="btn btn-primary">Save preferences</button>
+            <button type="submit" class="btn btn-primary">Get Meal Plan</button>
           </div>
         </div>
       </div>
@@ -149,8 +124,57 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMakananModal">+ Tambah Makanan</button>
+  {% if plan|length %}
+  <strong><p> Terdapat {{ plan|length }} pilihan: </p></strong>
+    {% for p in plan %}
+    <h6>Pilihan {{ forloop.counter }}:</h6>
+    <table class="mt-3 table table-bordered table-striped">
+      <tr>
+        <th class="align-middle text-center">Makanan</th>
+        <th class="align-middle text-center">Lemak</th>
+        <th class="align-middle text-center">Protein</th>
+        <th class="align-middle text-center">Karbohidrat</th>
+        <th class="align-middle text-center">Vitamin</th>
+        <th class="align-middle text-center">Indeks Glukemik</th>
+        <th class="align-middle text-center">Harga</th>
+        <th class="align-middle text-center">Kalori</th>
+      </tr>
+    {% for m in p.X %}
+       <tr>
+        <td class="align-middle text-center"><h5>{{ m.M }}</h5></td>
+        <td class="align-middle text-center"><p>{{ m.L }}</p></td>
+        <td class="align-middle text-center"><p>{{ m.P }}
+        <td class="align-middle text-center"><p>{{ m.K }}</p></td>
+        <td class="align-middle text-center">
+          {% for v, jv in m.VJV %}
+          <p>{{ v.decode }}: {{ jv }}</p>
+          {% endfor %}
+        </td>
+        <td class="align-middle text-center"><p>{{ m.IG }}</p></td>
+        <td class="align-middle text-center"><p>{{ m.H }}</p></td>
+        <td class="align-middle text-center"><p>{{ m.C }}</p></td>
+      </tr>
+    {% endfor %}
+    </table>
+    <table class="mb-5 table table-bordered table-striped">
+      <tr>
+        <th class="align-middle text-center"></th>
+        <th class="align-middle text-center">Harga</th>
+        <th class="align-middle text-center">Kalori</th>
+        <th class="align-middle text-center">Lemak</th>
+        <th class="align-middle text-center">Protein</th>
+      </tr>
+       <tr>
+        <td class="align-middle text-center"><h5>Total</h5></td>
+        <td class="align-middle text-center"><p>{{ p.Tot_price }}</p></td>
+        <td class="align-middle text-center"><p>{{ p.Tot_kalori }}</p></td>
+        <td class="align-middle text-center"><p>{{ p.Tot_lemak }}
+        <td class="align-middle text-center"><p>{{ p.Tot_protein }}</p></td>
+      </tr>
+    </table>
+    {% endfor %}
 
+  {% endif %}
 
 
 </div> 

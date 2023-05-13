@@ -5,6 +5,8 @@ from tk_prolog import process
 
 def list_makanan(request):
 	result = process('data_makanan(M, L, P, K, V, JV, H, IG, C)')
+	for i in range(len(result)):
+		result[i]['VJV'] = zip(result[i]['V'], result[i]['JV'])
 	return render(request, 'list_makanan.html', context = {'makanan':result})
 
 def tambah_makanan(request):
@@ -86,8 +88,9 @@ def search_makanan(request):
 			for m in filtered_makanan:
 				data = process(f"data_makanan('{m['M']}', L, P, K, V, JV, H, IG, C)")
 				data[0]['M'] = m['M']
+				data[0]['VJV'] = zip(data[0]['V'], data[0]['JV'])
 				result.append(data[0])
-				
+
 			return render(request, 'list_makanan.html', context = {'makanan':result})
 		except:
 			context = {'error':'error'}

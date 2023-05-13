@@ -264,9 +264,9 @@
         <td class="align-middle text-center"><p>{{ m.P }}
         <td class="align-middle text-center"><p>{{ m.K }}</p></td>
         <td class="align-middle text-center">
-        	{% for v in m.V %}
-        	<p>{{ v.decode }}</p>
-        	{% endfor %}
+          {% for v, jv in m.VJV %}
+          <p>{{ v.decode }}: {{ jv }}</p>
+          {% endfor %}
         </td>
         <td class="align-middle text-center"><p>{{ m.IG }}</p></td>
         <td class="align-middle text-center"><p>{{ m.H }}</p></td>

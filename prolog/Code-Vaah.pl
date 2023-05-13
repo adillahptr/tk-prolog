@@ -50,12 +50,6 @@ validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
     number(IG),
     L>=0, P>=0, K>=0, H>=0, IG>=0.
 
-validate_input_vitamin([X]) :- 
-    (X == "A"; X == "B", X == "C"; X == "D" ; X == "E" ; X == "K").
-validate_input_vitamin([Hv|Tv]) :-
-    (Hv == "A" ; Hv == "B" ; Hv == "C" ; Hv == "D" ; Hv == "E" ; Hv == "K"),
-    validate_input_vitamin(Tv).
-
 filter_makanan(M, X, Harga_Min, Harga_Max, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, 
                 Protein_Max, Karbohidrat_Min, Karbohidrat_Max, IG_Min, IG_Max, List_Vitamin) :-
     makanan_search(X, M),
@@ -70,7 +64,7 @@ filter_makanan(M, X, Harga_Min, Harga_Max, Kalori_Min, Kalori_Max, Lemak_Min, Le
     karbohidrat_more_than(M, Karbohidrat_Min),
     (Karbohidrat_Max==none ; (Karbohidrat_Max\==none, karbohidrat_less_than(M, Karbohidrat_Max))),
     indeks_glukemik_more_than(M, IG_Min),
-    (Karbohidrat_Max==none ; (Karbohidrat_Max\==none, indeks_glukemik_less_than(M, IG_Max))),
+    (IG_Max==none ; (IG_Max\==none, indeks_glukemik_less_than(M, IG_Max))),
     has_vitamin(M, List_Vitamin).
 
 makanan_search(X, M) :-
@@ -277,13 +271,13 @@ tinggi_protein(Lm,Lj) :-
     Rat >= 0.20.
     
 %memilih set of beberapa kombinasi dari makanan
-menu_plan(Ind, Amt, Budget, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, AnsList):-
+menu_plan(Ind, Amt, Budget, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, AnsList, Tot_price, Tot_kalori, Tot_lemak, Tot_protein):-
     get_food(Ind, Amt, [], 0 , 0, 0, 0, Tot_price, Tot_kalori, Tot_lemak, Tot_protein, AnsList),
     Tot_price =< Budget,
     Tot_kalori >= Kalori_Min,
-    Tot_kalori =< Kalori_Max,
-    Tot_lemak =< Lemak_Min,
-    Tot_lemak =< Lemak_Max,
+    (Kalori_Max==none ; (Kalori_Max\==none, Tot_kalori =< Kalori_Max)),
+    Tot_lemak >= Lemak_Min,
+    (Lemak_Max==none ; (Lemak_Max\==none, Tot_lemak =< Lemak_Max)),
     Tot_protein >= Protein_Min.
 
 
@@ -294,7 +288,7 @@ get_food(Ind, Amt, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Tot_p
     protein(M,Po),
     lemak(M,L),
     kalori(M,K),
-    indeks_glukemik_less(M, Ind),
+    (Ind==none ; (Ind\==none, indeks_glukemik_less_than(M, Ind))),
 
     append( AccList, [M], AccListN),
     Acc_priceN is Acc_price+P,
