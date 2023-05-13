@@ -89,11 +89,11 @@
 			</div>
 			<div class="mb-3">
         <label for="makanan">Vitamin</label>
-				<input class="form-control" type="text" name="vitamin" placeholder="Jenis Vitamin (misal = A,B)">
+				<input class="form-control" type="text" name="vitamin" placeholder="Pisahkan dengan spasi">
 			</div>
       <div class="mb-3">
         <label for="makanan">Jumlah Vitamin</label>
-        <input class="form-control" type="text" name="jumlah_vitamin" placeholder="Jumlah Vitamin (misal = 1,2)">
+        <input class="form-control" type="text" name="jumlah_vitamin" placeholder="Pisahkan dengan spasi">
       </div>
 			<div class="mb-3">
         <label for="makanan">Indeks Glukemik</label>
@@ -126,26 +126,41 @@
 <div class="container">
   <div class="card mb-3">
   <div class="card-body">
-    <form>
+    <form method="POST" action="{% url 'search_makanan' %}">
+      {% csrf_token %}
       <div class="row">
         <div class="col">
           <div class="mb-3">
+            <label for="makanan">Nama Makanan</label>
+            <input class="form-control" name="nama_makanan" placeholder="">
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
             <label for="makanan">Min. Harga</label>
-            <input class="form-control" type="number" name="budget" placeholder="" required>
+            <input class="form-control" name="min_harga" placeholder="" value=0 required>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Max. Harga</label>
+            <input class="form-control" name="max_harga" placeholder="" value="none" required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Min. Kalori</label>
-            <input class="form-control" type="number" name="min_kalori" placeholder="" required>
+            <input class="form-control" name="min_kalori" placeholder="" value=0 required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Maks. Kalori</label>
-            <input class="form-control" type="number" name="max_kalori" placeholder="" required>
+            <input class="form-control" name="max_kalori" placeholder="" value="none" required>
           </div>
         </div>
       </div>
@@ -154,25 +169,69 @@
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Min. Lemak</label>
-            <input class="form-control" type="number" name="min_lemak" placeholder="" required>
+            <input class="form-control" name="min_lemak" placeholder="" value=0 required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Maks. Lemak</label>
-            <input class="form-control" type="number" name="maks_lemak" placeholder="" required>
+            <input class="form-control" name="max_lemak" placeholder=""  value="none" required>
           </div>
         </div>
 
         <div class="col">
           <div class="mb-3">
             <label for="makanan">Min. Protein</label>
-            <input class="form-control" type="number" name="min_protein" placeholder="" required>
+            <input class="form-control" name="min_protein" placeholder="" value=0 required>
           </div>
         </div>
 
         <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Max. Protein</label>
+            <input class="form-control" name="max_protein" placeholder=""  value="none" required>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Min. Karbohidrat</label>
+            <input class="form-control" name="min_karbohidrat" placeholder="" value=0 required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Max. Karbohidrat</label>
+            <input class="form-control" name="max_karbohidrat" placeholder="" value="none" required>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Min. Indeks Glukemik</label>
+            <input class="form-control" type="number" name="min_ig" placeholder="" value=0 required>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Max. Indeks Glukemik</label>
+            <input class="form-control" name="max_ig" placeholder="" value="none" required>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
+            <label for="makanan">Jenis Vitamin</label>
+            <input class="form-control" name="vitamin" placeholder="Pisahkan dengan spasi">
+          </div>
+        </div>
+
+      <div class="col">
           <div class="mb-3">
             <br>
             <button type="submit" class="btn btn-primary">Apply filter</button>
