@@ -31,6 +31,7 @@ RUN apt-get install git -y
 RUN pip install -r requirements.txt  
 # port where the Django app runs  
 EXPOSE 8000  
-# start server  
+# start server
+CMD ["swipl", "--version"]
 ENTRYPOINT ["python3", "manage.py"]
 CMD ["runserver", "0.0.0.0:8080"]
