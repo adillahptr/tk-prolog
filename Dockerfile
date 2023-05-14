@@ -19,10 +19,7 @@ ENV PYTHONUNBUFFERED 1
 COPY . $DockerHOME  
 # run this command to install all dependencies
 RUN apt-get update
-RUN apt-get install software-properties-common -y
-RUN apt-add-repository ppa:swi-prolog/stable
-RUN apt-get update
-RUN apt-get install swi-prolog -y
+RUN apt install swi-prolog -y
 RUN set -xe \
     && apt-get update \
     && apt-get install python3-pip -y
@@ -32,6 +29,5 @@ RUN pip install -r requirements.txt
 # port where the Django app runs  
 EXPOSE 8000  
 # start server
-CMD ["swipl", "--version"]
 ENTRYPOINT ["python3", "manage.py"]
 CMD ["runserver", "0.0.0.0:8080"]
