@@ -121,6 +121,12 @@
 	  <h1 style="color: black;">List Makanan</h1><br>
 	  <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createMakananModal">Buat Makanan Baru</a>
 	  <br>
+    {% for message in messages %}
+     <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+      {{message}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
 </div>
 
 <div class="container">

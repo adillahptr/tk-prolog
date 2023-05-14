@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
+from django.contrib import messages
 
 from tk_prolog import process
 
@@ -21,6 +22,9 @@ def meal_planner(request):
 			
 			result = process(query)
 
+			if not result:
+				raise Exception("")
+
 			for i in range(len(result)):
 				for j in range(len(result[i]['X'])):
 					nama = result[i]['X'][j]
@@ -30,6 +34,5 @@ def meal_planner(request):
 					data[0]['VJV'] = zip(data[0]['V'], data[0]['JV'])
 			return render(request, 'meal_planner.html', context = {'plan':result})
 		except:
-			context = {'error':'error'}
-			return HttpResponse('error')
+			messages.info(request, 'Gagal membuat meal plan')
 	return render(request, 'meal_planner.html')

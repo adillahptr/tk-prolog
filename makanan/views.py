@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
+from django.contrib import messages
 
 from tk_prolog import process
 
@@ -24,11 +25,13 @@ def tambah_makanan(request):
 			vitamin = str(vitamin.split(' ')).replace("'", '"') if vitamin else str([])
 			jumlah_vitamin = str([int(x) for x in jumlah_vitamin.split(' ')]) if jumlah_vitamin else str([])
 			query = f"""tambah_makanan('{nama}', {lemak}, {protein}, {karbohidrat}, {vitamin}, {jumlah_vitamin}, {harga}, {ig})"""
-			print(query)
 
 			result = process(query)
+
+			if not result:
+				messages.info(request, 'Gagal menambahkan makanan')
 		except:
-			context = {'error':'error'}
+			messages.info(request, 'Gagal menambahkan makanan')
 	return redirect('list_makanan')
 
 def update_makanan(request):
@@ -43,19 +46,21 @@ def update_makanan(request):
 			ig = request.POST.get('indeks_glukemik')
 			harga = request.POST.get('harga')
 
-			vitamin = str(vitamin.split(' ')).replace("'", '"')
-			jumlah_vitamin = str([int(x) for x in jumlah_vitamin.split(',')])
+			vitamin = str(vitamin.split(' ')).replace("'", '"') if vitamin else str([])
+			jumlah_vitamin = str([int(x) for x in jumlah_vitamin.split(' ')]) if jumlah_vitamin else str([])
 			result = process(f"""update_makanan('{nama}', {lemak}, {protein}, {karbohidrat}, {vitamin}, {jumlah_vitamin}, {harga}, {ig})""")
+
+			if not result:
+				messages.info(request, 'Gagal mengupdate makanan')
 		except:
-			context = {'error':'error'}
+			messages.info(request, 'Gagal mengupdate makanan')
 	return redirect('list_makanan')
 
 def hapus_makanan(request, nama_makanan):
 	try:
 		result = process(f"delete_makanan('{nama_makanan}')")
 	except:
-		print('error')
-		context = {'error':'Gagal menghapus makanan'}
+		messages.info(request, 'Gagal menghapus makanan')
 	return redirect('list_makanan')
 
 def search_makanan(request):
@@ -93,6 +98,5 @@ def search_makanan(request):
 
 			return render(request, 'list_makanan.html', context = {'makanan':result})
 		except:
-			context = {'error':'error'}
-			return HttpResponse('error')
+			messages.info(request, 'Terjadi kesalahan')
 	return redirect('list_makanan')
