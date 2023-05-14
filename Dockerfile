@@ -33,4 +33,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8000  
 # start server  
 ENTRYPOINT ["python3", "manage.py"]
-CMD ["runserver", "0.0.0.0:8000"]
+CMD ["runserver", "0.0.0.0:8080"]

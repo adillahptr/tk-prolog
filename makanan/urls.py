@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import list_makanan, hapus_makanan, tambah_makanan, search_makanan
+from .views import list_makanan, hapus_makanan, tambah_makanan, search_makanan, update_makanan
 
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
 	path('search/', search_makanan, name='search_makanan'),
 	path('hapus/<str:nama_makanan>', hapus_makanan, name='hapus_makanan'),
 	path('tambah_makanan/', tambah_makanan, name='tambah_makanan'),
+	path('update_makanan/', update_makanan, name='update_makanan'),
 ]
