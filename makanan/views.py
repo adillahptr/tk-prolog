@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 
 from tk_prolog import process
 
@@ -10,6 +11,7 @@ def list_makanan(request):
 		result[i]['VJV'] = zip(result[i]['V'], result[i]['JV'])
 	return render(request, 'list_makanan.html', context = {'makanan':result})
 
+@csrf_exempt
 def tambah_makanan(request):
 	if request.method == 'POST':
 		try:
@@ -34,6 +36,7 @@ def tambah_makanan(request):
 			messages.info(request, 'Gagal menambahkan makanan')
 	return redirect('list_makanan')
 
+@csrf_exempt
 def update_makanan(request):
 	if request.method == 'POST':
 		try:
@@ -63,6 +66,7 @@ def hapus_makanan(request, nama_makanan):
 		messages.info(request, 'Gagal menghapus makanan')
 	return redirect('list_makanan')
 
+@csrf_exempt
 def search_makanan(request):
 	if request.method == 'POST':
 		try:

@@ -5,7 +5,7 @@ from django.contrib import messages
 from tk_prolog import process
 
 
-
+@csrf_exempt
 def meal_planner(request):
 	if request.method == 'POST':
 		try:
