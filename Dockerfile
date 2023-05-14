@@ -27,7 +27,7 @@ RUN pip install --upgrade pip
 RUN apt-get install git -y
 RUN pip install -r requirements.txt  
 # port where the Django app runs  
-EXPOSE 8000  
+EXPOSE 8080  
 # start server
 ENTRYPOINT ["python3", "manage.py"]
 CMD ["runserver", "0.0.0.0:8080"]
