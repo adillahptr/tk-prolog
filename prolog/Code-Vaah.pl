@@ -8,6 +8,24 @@ Anggota Kelompok:
 */
 
 % definisi rule
+vitamin("A").
+vitamin("C").
+vitamin("D").
+vitamin("E").
+vitamin("K").
+vitamin("B1").
+vitamin("B2").
+vitamin("B3").
+vitamin("B5").
+vitamin("B6").
+vitamin("B7").
+vitamin("B9").
+vitamin("B12").
+
+is_list_of_vitamin([X]) :- vitamin(X).
+is_list_of_vitamin([H|T]) :- 
+    vitamin(H), 
+    is_list_of_vitamin(T).
 
 tambah_makanan(M, L, P, K, V, JV, H, IG) :-
     \+ makanan(M),
@@ -44,7 +62,7 @@ validate_input_makanan(M, L, P, K, V, JV, H, IG) :-
     number(P),
     number(K),
     number(H),
-    (V==[] ; is_list_of_string(V)),
+    (V==[] ; is_list_of_vitamin(V)),
     (JV==[] ; is_list_of_number(JV)),
     has_same_length(V, JV),
     number(IG),
