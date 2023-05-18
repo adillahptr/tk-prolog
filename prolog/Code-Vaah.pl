@@ -115,6 +115,12 @@ data_makanan(M, L, P, K, V, JV, H, IG, C) :-
     indeks_glukemik(M, IG),
     kalori(M, C).
 
+data_makanan_from_list_makanan([], []).
+data_makanan_from_list_makanan([Hm|Tm], R) :-
+    data_makanan_from_list_makanan(Tm, Ldm),
+    data_makanan(Hm, L, P, K, V, JV, H, IG, C),
+    append([[Hm, L, P, K, V, JV, H, IG, C]], Ldm, R).
+
 kalori(M, Ans):-
     protein(M,P),
     karbohidrat(M,K),
@@ -289,14 +295,15 @@ tinggi_protein(Lm,Lj) :-
     Rat >= 0.20.
     
 %memilih set of beberapa kombinasi dari makanan
-menu_plan(Ind, Amt, Budget, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, AnsList, Tot_price, Tot_kalori, Tot_lemak, Tot_protein):-
+menu_plan(Ind, Amt, Budget, Kalori_Min, Kalori_Max, Lemak_Min, Lemak_Max, Protein_Min, AnsList, ListDataMakanan, Tot_price, Tot_kalori, Tot_lemak, Tot_protein):-
     get_food(Ind, Amt, [], 0 , 0, 0, 0, Tot_price, Tot_kalori, Tot_lemak, Tot_protein, AnsList),
     Tot_price =< Budget,
     Tot_kalori >= Kalori_Min,
     (Kalori_Max==none ; (Kalori_Max\==none, Tot_kalori =< Kalori_Max)),
     Tot_lemak >= Lemak_Min,
     (Lemak_Max==none ; (Lemak_Max\==none, Tot_lemak =< Lemak_Max)),
-    Tot_protein >= Protein_Min.
+    Tot_protein >= Protein_Min,
+    data_makanan_from_list_makanan(AnsList, ListDataMakanan).
 
 
 get_food(Ind, Amt, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Tot_price, Tot_Kalori, Tot_lemak, Tot_protein, AnsList):-
@@ -317,11 +324,3 @@ get_food(Ind, Amt, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Tot_p
     get_food(Ind, AmtN, AccListN, Acc_priceN, Acc_lemakN, Acc_proteinN, Acc_kaloriN, Tot_price, Tot_Kalori, Tot_lemak, Tot_protein, AnsList).
 
 get_food(_, 0, AccList, Acc_price, Acc_lemak, Acc_protein, Acc_kalori, Acc_price, Acc_kalori, Acc_lemak, Acc_protein, AccList).
-
-tambah_user(Username, Password) :-
-    \+ user(Username, _),
-    assert_user(Username, Password).
-
-verify_user(Username, Password) :-
-    crypto_password_hash(Password, X),
-    user(Username, X).   

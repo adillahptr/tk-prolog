@@ -138,20 +138,23 @@
         <th class="align-middle text-center">Harga</th>
         <th class="align-middle text-center">Kalori</th>
       </tr>
-    {% for m in p.X %}
+    {% for m in p.LDM %}
        <tr>
-        <td class="align-middle text-center"><h5>{{ m.M }}</h5></td>
-        <td class="align-middle text-center"><p>{{ m.L }}</p></td>
-        <td class="align-middle text-center"><p>{{ m.P }}
-        <td class="align-middle text-center"><p>{{ m.K }}</p></td>
+        <td class="align-middle text-center"><h5>{{ m.0 }}</h5></td>
+        <td class="align-middle text-center"><p>{{ m.1 }}</p></td>
+        <td class="align-middle text-center"><p>{{ m.2 }}
+        <td class="align-middle text-center"><p>{{ m.3 }}</p></td>
         <td class="align-middle text-center">
-          {% for v, jv in m.VJV %}
-          <p>{{ v.decode }}: {{ jv }}</p>
-          {% endfor %}
+          {% for v in m.4 %}{% for jv in m.5 %}
+              {% if forloop.counter == forloop.parentloop.counter %}
+                  <p>{{ v.decode }}: {{ jv }}</p>
+              {% endif %}
+          {% endfor %}{% endfor %}
+
         </td>
-        <td class="align-middle text-center"><p>{{ m.IG }}</p></td>
-        <td class="align-middle text-center"><p>{{ m.H }}</p></td>
-        <td class="align-middle text-center"><p>{{ m.C }}</p></td>
+        <td class="align-middle text-center"><p>{{ m.7 }}</p></td>
+        <td class="align-middle text-center"><p>{{ m.6 }}</p></td>
+        <td class="align-middle text-center"><p>{{ m.8 }}</p></td>
       </tr>
     {% endfor %}
     </table>
